@@ -1,0 +1,41 @@
+mythump = (5.5,"apple", 3,5,"banana", "cherry" , 5 , 6,None )
+mylist = [5.5,"apple", 5,3,"banana", "cherry" , 5 , 6 ]
+myset = {5.5,"apple", 3,7,"banana", "cherry" , 5 , 6,None }
+myDict = {"Karel" : 1, "Pepa" : 2, "jenda" : 1.4, "Lojza" : None, "Jenda" : 5}
+mystring = "AHojKarle AHojKarle"
+
+
+tump = (85,"jenda",mythump,99,56,"jejda",mylist,myset,mystring,myDict)
+
+print(type(tump))
+print(tump)
+
+
+print("---------list-------")
+
+list = [85,"jenda",mythump,99,56,"jejda",mylist,myset,mystring,myDict]
+
+print(type(list))
+print(list)
+print("\n")
+
+print("---------set--------")
+#set = {85,"jenda",mythump,99,56,"jejda",mylist,myset,mystring,myDict} #set problem se vsemi kolekcemi krom tuple
+print(type(set))
+print(set)
+
+print("-------Dic----------")
+#Dict = {  "karel" : myset,"jejda" : myDict, "lubos" : mystring ,mystring : "ahoj" , myset : "pepa" , myDict : "jeje"} #nelze pouzit ani jako klic ani jako hodnota krom stringu
+#print(Dict)
+print("\n")
+
+print("-------string----------")
+mystring = "AHojKarle AHojKarle"
+#mystring += myset
+#mystring += myDict
+#mystring += mythump
+#mystring += mylist 
+mystring += mystring #nelze vnorit kolekce krom stringu do nej 
+
+print(type(mystring))
+print(mystring)

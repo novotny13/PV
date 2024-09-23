@@ -1,0 +1,32 @@
+mytuple = (5.5,"apple", 3,5,"banana", "cherry" , 5 , 6,None )
+#mytuple.
+#tuple nema zadnou metodu na pridani objektu
+
+print("--------list---------")
+mylist = [5.5,"apple", 5,3,"banana", "Lelda" , 5 , 6 ]
+mylist.append("pepa")
+mylist.insert(3,55)
+mylist.extend(mythump) #lze pouzit jakoukoliv kolekci
+print(mylist)
+print("\n")
+
+print("---------set--------")
+myset = {5.5,"apple", 3,7,"banana", "cherry" , 5 , 6,None }
+myset.add("karel")
+myset.update(mylist) #u metody update nema set problem s ostatnimi kolekcemi 
+print(myset)
+print("\n")
+
+print("---------Dic--------")
+myDict = {"Karel" : 1, "Pepa" : 2, "jenda" : 1.4, "Lojza" : None, "Jenda" : 5}
+myDict["color"] = "red"
+myDict.update({"Ford": 2})
+print(myDict)
+print("\n")
+
+print("--------string---------")
+mystring = "AHojKarle AHojKarle"
+mystring += "1"
+print(mystring)
+
+

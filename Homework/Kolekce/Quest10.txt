@@ -1,0 +1,44 @@
+mytuple = (5.5,"apple", 3,5,"banana", "cherry" , 5 , 6,None )
+
+print(dir(mytuple))
+print("\n")
+
+print("--------list---------")
+mylist = [5.5,"apple", 5,3,"banana", "Lelda" , 5 , 6 ]
+mylist.pop() # index nebo bez,bez vymaze posledni
+mylist.remove("apple")
+del mylist[0] #removes the specific index
+mylist.clear()
+
+print(mylist)
+print("\n")
+
+print("-------set----------")
+myset = {5.5,"apple", 3,7,"banana", "cherry" , 5 , 6,None }
+myset.remove("apple") #If the item to remove does not exist, remove() will raise an error.
+myset.discard("banana") #If the item to remove does not exist, discard() will NOT raise an error.
+myset.pop() #discard random item
+myset.clear()
+print(myset)
+del myset
+print("\n")
+
+print("--------Dic---------")
+myDict = {"Karel" : 1, "Pepa" : 2, "jenda" : 1.4, "Lojza" : None, "Jenda" : 5}
+myDict.pop("Karel")
+myDict.popitem()
+del myDict["Pepa"]
+myDict.clear()
+print(myDict)
+del myDict
+print("\n")
+
+print("--------string---------")
+mystring = "AHojKarle AHojKarle"
+print(dir(mystring))
+print(id(mystring))
+#print(mystring.removeprefix("AHojKarle AHoj"))
+print(mystring.removesuffix("Karle"))
+print(id(mystring))
+
+

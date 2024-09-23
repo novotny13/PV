@@ -1,0 +1,28 @@
+mytuple = (5.5,"apple", 3,5,"banana", "cherry" , 5 , 6,None )
+print(type(mytuple))
+print(mytuple)
+
+
+print("-------list---------")
+mylist = [5.5,"apple", 5,3,"banana", "cherry" , 5 , 6,None ]
+print(type(mylist))
+print(mylist)
+print("\n")
+
+print("---------set--------")
+myset = {5.5,"apple", 3,7,"banana", "cherry" , 5 , 6,None }
+print(type(myset))
+print(myset)
+print("\n")
+
+print("---------Dic--------")
+myDict = {"Karel" : 1, "Pepa" : 2, "jenda" : 1.4, "Lojza" : None, "Jenda" : 5}
+print(type(myDict))
+print(myDict)
+print("\n")
+
+print("-------string----------")
+mystring = "AHojKarle AHojKarle"
+mystring += None
+print(type(mystring))
+print(mystring)

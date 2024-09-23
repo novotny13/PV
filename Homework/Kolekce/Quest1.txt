@@ -1,0 +1,19 @@
+mytuple = ("apple", "banana", "cherry" , 5 , 6)
+
+print(mytuple)
+
+print("----------list------")
+mylist = ["apple", "banana", "cherry", 54, 9,9.5 ]
+print(mylist)
+print("\n")
+print("-------set----------")
+myset = {"apple", "banana", "cherry",1,2,9,9.5 }
+print(myset)
+print("\n")
+print("---------Dic--------")
+myDict = {"Karel" : 1, "Pepa" : 2, "jenda" : 1.4}
+print(myDict)
+print("\n")
+print("-------string----------")
+mystring = "AHojKarle"
+print(mystring)
