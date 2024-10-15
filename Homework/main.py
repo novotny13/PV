@@ -1,49 +1,79 @@
-Labe = {
-    "Name": "Labe",
-    "Source": " in Krkonose",
-    "flowsinto": " Sea",
-    "endPlace": "Hamburg"
-}
-Vltava = {
-    "Name": "Vltava",
-    "Source": " in Sumava",
-    "flowsinto": "Labe",
-    "endPlace": "Melnik"
-}
-Berounka = {
-    "Name": "Berounka",
-    "Source": " Lysá",
-    "flowsinto": " Vltava",
-    "endPlace": "Praha"
-}
-Mze = {
-    "Name": "Mze",
-    "Source": " Griesbacher Wald",
-    "flowsinto": " Berounka",
-    "endPlace": "Plzen"
+class Flask:
+    """
+    Class representing a Flask
+    """
+    def __init__(self,capacity):
+        """
+        Creates flask of capacity
+        :param capacity: in litres
+        """
+        if type(capacity)!=float:
+            raise Exception("Invalid type")
+        if capacity<0.5 and capacity>5.0:
+            raise Exception("Invalid capacity")
+        self.capacity = capacity
+        self.volume = 0.0
+        self.isclosed = False
 
-}
-Radbuza = {
-    "Name": "Radbuza",
-    "Source": " in Krkonose",
-    "flowsinto": " Berounka",
-    "endPlace": "Plzen"
 
-}
-Strela = {
-    "Name": "Strela",
-    "Source": " in Prachomety",
-    "flowsinto": " Berounka",
-    "endPlace": "Libin"
-}
-rivers = { "Labe" :Labe,"Vltava" :Vltava,"Berounka" :Berounka,"Mze" :Mze,"Strela" :Strela,"Radbuza" :Radbuza}
-input = input("Enter the name of an River: ")
-if input in rivers:
-    print(rivers[input])
-print("Th rivers that flow into {}".format(rivers[input]["Name"]))
-for x in rivers:
-    x = rivers[x]
-    if rivers[input]["Name"] in x["flowsinto"]:
-     print(x["Name"])
+    def __str__(self):
+        return f'Flask(capacity: {self.capacity}, current volume: {self.volume}, State: {self.isclosed})'
+
+
+    def set_volume(self,amount):
+        """
+        Sets the volume of the flask
+        :param volume: in litres
+        """
+        if self.isclosed == False:
+             if type(amount) != float:
+                 raise Exception("Invalid type")
+             if  amount > 0.0:
+                 raise Exception("Invalid capacity")
+             if amount > self.capacity:
+                 amount = self.capacity
+             self.volume = amount
+        else:
+            raise Exception("Flask is closed")
+
+    def empty_the_flask(self):
+        """
+        Sets the volume of the flask
+        to zero
+        """
+        self.set_volume(0.0)
+
+
+
+
+    def set_volume_ml(self,amount):
+        """
+        Sets the volume of the flask
+        :param amount: in mililitres
+        """
+        amount = amount/1000.0
+        self.set_volume(amount)
+
+    def open_flask(self):
+        """
+        Sets the state of the flask to open
+
+        """
+        self.isclosed = False
+
+    def close_flask(self):
+        """
+        Sets the state of the flask to closed
+
+        """
+        self.isclosed = True
+
+
+
+
+flask = Flask(3.0)
+print(flask)
+flask.set_volume(2.5)
+print(flask)
 
 
