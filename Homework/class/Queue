@@ -34,8 +34,8 @@ class LinkedList:
 
         current = self.tail
         while current:
-            print(current.data)
-            current = current.previous
+               yield current.data
+            current = current.next
 
 
 
