@@ -39,15 +39,7 @@ class LinkedList:
 
 
 
-linked_list = LinkedList()
-linked_list.append(10)
-linked_list.append(20)
-linked_list.append(30)
-linked_list.append(40)
-linked_list.append(50)
 
-
-linked_list.print_list()
 
 
 
@@ -99,7 +91,7 @@ stack.add(40)
 stack.add(50)
 
 
-print("Počet prvků ve frontě:", stack.count())
+print("Počet prvků v zasobniku:", stack.count())
 
 try:
     print("Odebraný prvek:", stack.pop())
@@ -110,15 +102,8 @@ except IndexError:
 print("Počet prvků po pop:", stack.count())
 
 
-print("Všechny prvky z fronty:", stack.popAll())
+print("Všechny prvky ze zasobniku:", stack.popAll())
 
 
 print("Počet prvků po popAll:", stack.count())
 
-stack.add(10)
-stack.add(20)
-stack.add(30)
-stack.add(40)
-stack.add(50)
-
-print("Počet prvků po popAll:", stack.count())
