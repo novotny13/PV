@@ -24,8 +24,8 @@ class LinkedList:
 
     def print_list(self):
         current = self.head
-        while current:
-            print(current.data)
+          while current:
+            yield current.data
             current = current.next
 
 linked_list = LinkedList()
@@ -36,4 +36,5 @@ linked_list.append(40)
 linked_list.append(50)
 
 
-linked_list.print_list()
+for value in linked_list.print_list():
+    print(value)
