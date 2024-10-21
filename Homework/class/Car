@@ -1,0 +1,28 @@
+Třída Auto má následující atributy:
+1.
+objem_nadrze_l: Maximální kapacita nádrže v litrech.
+spotreba_na_100_km_l: Spotřeba paliva v litrech na 100 km.
+_aktualni_objem_paliva_v_nadrzi_l: Aktuální množství paliva v nádrži (private atribut).
+
+2.
+Public atributy (jsou přístupné zvenčí):
+objem_nadrze_l
+spotreba_na_100_km_l
+
+Private atributy (nejsou přístupné zvenčí, označené podtržítkem _):
+_aktualni_objem_paliva_v_nadrzi_l
+
+3.
+Jak je řešen ve třídě princip zapouzdření, jak se manipuluje s private atributy?
+Princip zapouzdření je řešen tak, že atribut _aktualni_objem_paliva_v_nadrzi_l je označen jako private (s podtržítkem) a není přímo přístupný zvenčí třídy. Manipulace s tímto atributem je možná pouze prostřednictvím metod:
+
+natankuj(): Slouží k přidání paliva do nádrže.
+popojed(): Odebírá palivo při jízdě.
+aktualni_stav_nadrze(): Vrací aktuální stav paliva v nádrži.
+
+
+auto = Auto(objem_nadrze_l=30.0, spotreba_na_100_km_l=12.5)
+
+auto.natankuj(22.5)
+
+auto.popojed(20)
