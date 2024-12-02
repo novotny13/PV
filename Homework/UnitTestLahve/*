@@ -1,1 +1,15 @@
+(.venv) PS C:\Users\ADMIN\PycharmProjects\UnitTesting> python -m coverage run testflask.py
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.002s
+
+OK
+(.venv) PS C:\Users\ADMIN\PycharmProjects\UnitTesting>  python -m coverage report
+Name           Stmts   Miss  Cover
+----------------------------------
+Flask.py          30      2    93%
+testflask.py      55      0   100%
+----------------------------------
+TOTAL             85      2    98%
+(.venv) PS C:\Users\ADMIN\PycharmProjects\UnitTesting> 
 
