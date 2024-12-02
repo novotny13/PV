@@ -1,1 +1,21 @@
+(.venv) PS C:\Users\ADMIN\PycharmProjects\UnitTesting2> python -m coverage run  main.py
+....F..
+======================================================================
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ADMIN\PycharmProjects\UnitTesting2\main.py", line 138, in test_performance_large_insertion
+    self.assertTrue(end_time - start_time <= 0.5, "Counting operation took too long!")
+AssertionError: False is not true : Counting operation took too long!
+
+----------------------------------------------------------------------
+Ran 7 tests in 8.093s
+
+FAILED (failures=1)
+(.venv) PS C:\Users\ADMIN\PycharmProjects\UnitTesting2> python -m coverage report
+Name      Stmts   Miss  Cover
+-----------------------------
+main.py      85      1    99%
+-----------------------------
+TOTAL        85      1    99%
+(.venv) PS C:\Users\ADMIN\PycharmProjects\UnitTesting2> 
 
