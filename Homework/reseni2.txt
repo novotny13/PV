@@ -1,0 +1,31 @@
+class Mistnost:
+    def __init__(self, jmeno, popisek):
+        self.jmeno = jmeno
+        self.popisek = popisek
+        self.sousedni_mistnosti = []
+
+    def __str__(self):
+        return self.jmeno
+
+    def __eq__(self, other):
+        if not isinstance(other, Mistnost):
+            return False
+        return self.jmeno == other.jmeno
+
+    def __hash__(self):
+        return hash(self.jmeno)
+
+    def add(self, mistnost):
+        if isinstance(mistnost, Mistnost) and mistnost != self and mistnost not in self.sousedni_mistnosti:
+            self.sousedni_mistnosti.append(mistnost)
+            return True
+        return False
+
+    def jdi(self, mistnost):
+        if not isinstance(mistnost, str):
+            raise TypeError("Název místnosti musí být řetězec.")
+        for soused in self.sousedni_mistnosti:
+            if soused.jmeno == mistnost:
+                return soused
+        raise NameError(f"Místnost '{mistnost}' neexistuje.")
+

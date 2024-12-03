@@ -1,0 +1,41 @@
+class MnozinaException(Exception):
+    """Vlastní výjimka pro Mnozinu."""
+    pass
+
+class Mnozina:
+    def __init__(self):
+        self.data = set()  # Používáme Python set pro interní reprezentaci množiny
+
+    def vloz(self, prvek):
+        """Vloží prvek do množiny (nepovolí duplikáty)."""
+        self.data.add(prvek)
+
+    def odeber(self, prvek):
+        """Odebere prvek z množiny."""
+        self.data.discard(prvek)  # discard nevyvolá výjimku, pokud prvek neexistuje
+
+    def __contains__(self, prvek):
+        """Zkontroluje, zda je prvek v množině."""
+        return prvek in self.data
+
+    def __eq__(self, other):
+        """Porovnání množiny."""
+        if not isinstance(other, Mnozina):
+            return False
+        return self.data == other.data
+
+    def __len__(self):
+        """Vrátí počet prvků v množině."""
+        return len(self.data)
+
+    def prunik(self, other):
+        """Vrátí průnik dvou množin."""
+        if not isinstance(other, Mnozina):
+            raise MnozinaException("Průnik je možný pouze mezi dvěma množinami.")
+        return Mnozina(self.data & other.data)  # Používáme základní operace setu
+
+    def sjednoceni(self, other):
+        """Vrátí sjednocení dvou množin."""
+        if not isinstance(other, Mnozina):
+            raise MnozinaException("Sjednocení je možné pouze mezi dvěma množinami.")
+        return Mnozina(self.data | other.data)  # Používáme základní operace setu
