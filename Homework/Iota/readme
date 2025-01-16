@@ -1,1 +1,41 @@
+udelej 2 view
+transakci... tady mas napad.: a taky logovani erroru(to udelej do te transakce)
+public void AssignTaskToUser(int userId, int taskId)
+{
+    using (var transaction = _dbContext.Database.BeginTransaction())
+    {
+        try
+        {
+            // Přidání úkolu k uživatelskému účtu
+            var userTask = new UserTask
+            {
+                UserId = userId,
+                TaskId = taskId,
+                AssignedDate = DateTime.Now
+            };
+
+            _dbContext.UserTasks.Add(userTask);
+
+            // Můžete také aktualizovat nějaký záznam v tabulce Users
+            var user = _dbContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user != null)
+            {
+                user.Points -= 10; // třeba použít body uživatele pro úkol
+                _dbContext.Users.Update(user);
+            }
+
+            // Uložení změn do obou tabulek
+            _dbContext.SaveChanges();
+
+            // Commitování transakce
+            transaction.Commit();
+        }
+        catch (Exception)
+        {
+            // V případě chyby vrátíme transakci zpět
+            transaction.Rollback();
+            throw;
+        }
+    }
+}
 
