@@ -1,4 +1,4 @@
-udelej 2 view
+udelej 2 view jedna treba vsechny tasky ktere kdy nekdo udelal. a druhou treba rewardy vsech lidi nevim to asi ne
 transakci... tady mas napad.: a taky logovani erroru(to udelej do te transakce)
 public void AssignTaskToUser(int userId, int taskId)
 {
