@@ -1,95 +1,128 @@
-class OhmState:
-    def __init__(self):
-        self.voltage = None
-        self.current = None
-        self.resistance = None
-        
-    def set_value(self, value_type, value):
-        raise NotImplementedError()
-        
-    def calculate(self, target_type):
-        raise NotImplementedError()
+import socket
 
-class KnowNothingState(OhmState):
-    def set_value(self, value_type, value):
-        if value_type.lower() == 'u':
-            return KnowUState(value)
-        elif value_type.lower() == 'r':
-            return KnowRState(value)
-        elif value_type.lower() == 'i':
-            return KnowIState(value)
-        raise ValueError("Neplatný typ hodnoty")
+# Třídy pro stavy serveru
+class State:
+    def handle_input(self, input_data):
+        raise NotImplementedError
 
-class KnowUState(OhmState):
-    def __init__(self, voltage):
-        super().__init__()
-        self.voltage = float(voltage)
-        
-    def set_value(self, value_type, value):
-        if value_type.lower() == 'r':
-            return KnowURState(self.voltage, float(value))
-        elif value_type.lower() == 'i':
-            return KnowUIState(self.voltage, float(value))
-        raise ValueError("Napřed nastavte odpor nebo proud")
-    
-    def calculate(self, target_type):
-        raise ValueError("Chybí potřebné hodnoty pro výpočet")
-
-# Další stavy podobně...
-
-class OhmServer:
-    def __init__(self):
-        self.state = KnowNothingState()
-        
-    def handle_command(self, command):
-        parts = command.split('=')
-        
-        if len(parts) == 2:
-            # Příkaz pro nastavení hodnoty
-            value_type, value = parts
-            try:
-                self.state = self.state.set_value(value_type.strip(), value.strip())
-                return "OK"
-            except ValueError as e:
-                return f"Chyba: {str(e)}"
-        elif command.endswith('?'):
-            # Příkaz pro výpočet
-            target_type = command[:-1].strip()
-            try:
-                result = self.state.calculate(target_type)
-                return f"{target_type.upper()}={result}"
-            except ValueError as e:
-                return f"Chyba: {str(e)}"
+class StateKnowNothing(State):
+    def handle_input(self, input_data):
+        if input_data.startswith("U="):
+            return StateKnowU(float(input_data[2:]))
+        elif input_data.startswith("R="):
+            return StateKnowR(float(input_data[2:]))
+        elif input_data.startswith("I="):
+            return StateKnowI(float(input_data[2:]))
         else:
-            return "Neplatný příkaz"
+            return self, "Chyba: Neplatný vstup. Očekává se U=, R= nebo I=."
 
-def main():
+class StateKnowU(State):
+    def __init__(self, U):
+        self.U = U
+
+    def handle_input(self, input_data):
+        if input_data.startswith("R="):
+            return StateKnowUandR(self.U, float(input_data[2:]))
+        elif input_data.startswith("I="):
+            return StateKnowUandI(self.U, float(input_data[2:]))
+        elif input_data == "U=?":
+            return self, f"U={self.U}V"
+        else:
+            return self, "Chyba: Neplatný vstup. Očekává se R=, I= nebo U=?."
+
+class StateKnowR(State):
+    def __init__(self, R):
+        self.R = R
+
+    def handle_input(self, input_data):
+        if input_data.startswith("U="):
+            return StateKnowUandR(float(input_data[2:]), self.R)
+        elif input_data.startswith("I="):
+            return StateKnowRandI(self.R, float(input_data[2:]))
+        elif input_data == "R=?":
+            return self, f"R={self.R}Ω"
+        else:
+            return self, "Chyba: Neplatný vstup. Očekává se U=, I= nebo R=?."
+
+class StateKnowI(State):
+    def __init__(self, I):
+        self.I = I
+
+    def handle_input(self, input_data):
+        if input_data.startswith("U="):
+            return StateKnowUandI(float(input_data[2:]), self.I)
+        elif input_data.startswith("R="):
+            return StateKnowRandI(float(input_data[2:]), self.I)
+        elif input_data == "I=?":
+            return self, f"I={self.I}A"
+        else:
+            return self, "Chyba: Neplatný vstup. Očekává se U=, R= nebo I=?."
+
+class StateKnowUandR(State):
+    def __init__(self, U, R):
+        self.U = U
+        self.R = R
+
+    def handle_input(self, input_data):
+        if input_data == "I=?":
+            I = self.U / self.R
+            return StateKnowUandI(self.U, I), f"I={I}A"
+        else:
+            return self, "Chyba: Neplatný vstup. Očekává se I=?."
+
+class StateKnowUandI(State):
+    def __init__(self, U, I):
+        self.U = U
+        self.I = I
+
+    def handle_input(self, input_data):
+        if input_data == "R=?":
+            R = self.U / self.I
+            return StateKnowUandR(self.U, R), f"R={R}Ω"
+        else:
+            return self, "Chyba: Neplatný vstup. Očekává se R=?."
+
+class StateKnowRandI(State):
+    def __init__(self, R, I):
+        self.R = R
+        self.I = I
+
+    def handle_input(self, input_data):
+        if input_data == "U=?":
+            U = self.R * self.I
+            return StateKnowUandR(U, self.R), f"U={U}V"
+        else:
+            return self, "Chyba: Neplatný vstup. Očekává se U=?."
+
+# Server
+def start_server(host='0.0.0.0', port=12345):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(('localhost', 12345))
-    server_socket.listen(1)
-    
-    ohm_server = OhmServer()
-    
-    print("Čekám na připojení...")
-    conn, addr = server_socket.accept()
-    print(f"Připojen klient z {addr}")
-    
-    while True:
-        try:
-            command = conn.recv(1024).decode().strip()
-            if not command:
-                break
-                
-            response = ohm_server.handle_command(command)
-            conn.sendall(f"{response}\n".encode())
-            
-        except Exception as e:
-            print(f"Chyba: {str(e)}")
-            conn.sendall("Chyba při zpracování příkazu\n".encode())
-            break
-    
-    conn.close()
-    server_socket.close()
+    server_socket.bind((host, port))
+    server_socket.listen(5)
+    print(f"Server naslouchá na {host}:{port}...")
 
+    while True:
+        client_socket, client_address = server_socket.accept()
+        print(f"Připojen klient: {client_address}")
+        state = StateKnowNothing()  # Počáteční stav
+
+        while True:
+            data = client_socket.recv(1024).decode().strip()
+            if not data:
+                break
+
+            print(f"Přijat příkaz: {data}")
+            if data == "CALCULATEOHM":
+                state = StateKnowNothing()
+                response = "OK"
+            else:
+                state, response = state.handle_input(data)
+
+            client_socket.send(response.encode())
+
+        client_socket.close()
+        print(f"Klient {client_address} odpojen.")
+
+# Spuštění serveru
 if __name__ == "__main__":
-    main()
+    start_server()
