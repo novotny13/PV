@@ -1,0 +1,40 @@
+import socket
+
+
+def start_client(host='192.168.1.41', port=65532):
+    # Vytvoření socketu
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    try:
+        # Připojení k serveru
+        client_socket.connect((host, port))
+        print(f"Připojeno k serveru na {host}:{port}")
+
+        while True:
+            # Uživatelský vstup
+            command = input("Zadejte příkaz (nebo 'exit' pro ukončení): ").strip()
+
+            # Odeslání příkazu na server
+            client_socket.send(command.encode('utf-8'))
+
+            # Ukončení klienta, pokud uživatel zadá 'exit'
+            if command.lower() == 'exit':
+                print("Odpojování od serveru...")
+                break
+
+            # Příjem odpovědi od serveru
+            response = client_socket.recv(1024).decode('utf-8')
+            print(f"Odpověď od serveru: {response}")
+
+    except Exception as e:
+        print(f"Chyba: {e}")
+
+    finally:
+        # Uzavření spojení
+        client_socket.close()
+        print("Spojení uzavřeno.")
+
+
+# Spuštění klienta
+if __name__ == "__main__":
+    start_client()
