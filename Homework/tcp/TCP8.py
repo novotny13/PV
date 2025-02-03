@@ -1,67 +1,55 @@
-import urllib.request
+import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin, urlparse
+import time
 
-
-def get_html(url):
-    """Stáhne a vrátí HTML kód stránky."""
+def get_page_info(url):
+    """Získá informace o stránce - titulek a odkazy"""
     try:
-        with urllib.request.urlopen(url) as response:
-            return response.read().decode("utf-8")
+        response = requests.get(url, timeout=5)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Získání titulku
+        title = soup.find('title')
+        title_text = title.text.strip() if title else "Bez titulku"
+        
+        # Získání všech odkazů
+        links = []
+        for link in soup.find_all('a'):
+            href = link.get('href')
+            if href:
+                # Převod relativních URL na absolutní
+                absolute_url = urljoin(url, href)
+                # Odfiltrování fragmentů a neplatných URL
+                if absolute_url.startswith(('http://', 'https://')):
+                    links.append(absolute_url)
+        
+        return title_text, links
     except Exception as e:
-        print(f"Chyba při připojování k URL {url}: {e}")
-        return None
-
-
-def parse_page(url):
-    """Stáhne HTML, vrátí titulek a seznam odkazů."""
-    html = get_html(url)
-    if html is None:
+        print(f"Chyba při zpracování {url}: {str(e)}")
         return None, []
-
-    soup = BeautifulSoup(html, "html.parser")
-
-    # Získat titulek stránky
-    title = soup.title.string.strip() if soup.title else "Bez titulku"
-
-    # Získat všechny odkazy na stránce
-    links = [link["href"] for link in soup.find_all("a", href=True)]
-
-    return title, links
-
-
-def absolute_url(base_url, link):
-    """Zajistí, že URL odkazu bude absolutní."""
-    if link.startswith("http://") or link.startswith("https://"):
-        return link
-    if link.startswith("/"):
-        return base_url.rstrip("/") + link
-    return base_url.rstrip("/") + "/" + link
-
 
 def main():
     # Hlavní URL
-    main_url = "http://vlada.cz"
-    print(f"Stahuji hlavní stránku: {main_url}")
-
-    # Zpracovat hlavní stránku
-    main_title, main_links = parse_page(main_url)
-    print(f"\nTitulek hlavní stránky: {main_title}")
-    print(f"Počet odkazů na hlavní stránce: {len(main_links)}")
-
-    # Vytvořit seznam unikátních absolutních URL odkazů
-    unique_links = list({absolute_url(main_url, link) for link in main_links})
-
-    # Zpracovat každou stránku na 2. úrovni
-    print("\nZpracovávám odkazy na 2. úrovni...")
-    for link in unique_links:
-        print(f"\nNavštěvuji: {link}")
-        title, links = parse_page(link)
-        if title is not None:
+    start_url = "http://vlada.cz"
+    
+    # Získání informací o hlavní stránce
+    print(f"\nZpracovávám hlavní stránku: {start_url}")
+    title, main_links = get_page_info(start_url)
+    
+    if title:
+        print(f"Titulek: {title}")
+        print(f"Počet odkazů: {len(main_links)}")
+    
+    # Zpracování všech odkazů z hlavní stránky
+    print("\nZpracovávám odkazy z hlavní stránky:")
+    for i, link in enumerate(main_links, 1):
+        print(f"\n{i}. Zpracovávám: {link}")
+        title, links = get_page_info(link)
+        if title:
             print(f"Titulek: {title}")
-            print(f"Počet odkazů na stránce: {len(links)}")
-        else:
-            print("Chyba při zpracování stránky.")
-
+            print(f"Počet odkazů: {len(links)}")
+        time.sleep(0.5)  # Krátká pauza mezi požadavky
 
 if __name__ == "__main__":
     main()
