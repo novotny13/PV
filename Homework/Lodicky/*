@@ -1,1 +1,56 @@
+import itertools
+import random
 
+# Brute force algoritmus
+def boat_brute_force(*weights):
+    positions = ['left', 'center', 'right']
+    best_balance = float('inf')
+    best_arrangement = None
+    
+    # Generujeme všechny možné permutace
+    for perm in itertools.permutations(weights):
+        balance = abs(perm[0] - perm[2])  # Rozdíl mezi levou a pravou stranou
+        if balance < best_balance:
+            best_balance = balance
+            best_arrangement = perm
+    
+    return best_arrangement, best_balance
+
+# Monte Carlo algoritmus
+def boat_monte_carlo(*weights, trials=4):
+    positions = ['left', 'center', 'right']
+    best_balance = float('inf')
+    best_arrangement = None
+    
+    for _ in range(trials):
+        perm = random.sample(weights, len(weights))
+        balance = abs(perm[0] - perm[2])
+        if balance < best_balance:
+            best_balance = balance
+            best_arrangement = perm
+    
+    return best_arrangement, best_balance
+
+# Heuristický algoritmus
+def boat_heuristic(*weights):
+    sorted_weights = sorted(weights)
+    # Nejlehčí a nejtěžší na krajích, střední uprostřed
+    arrangement = (sorted_weights[0], sorted_weights[1], sorted_weights[2])
+    balance = abs(arrangement[0] - arrangement[2])
+    
+    return arrangement, balance
+
+# Testování funkcí
+weights = (73, 85, 81)
+
+# Brute force
+brute_force_result = boat_brute_force(*weights)
+print("Brute Force Result:", brute_force_result)
+
+# Monte Carlo
+monte_carlo_result = boat_monte_carlo(*weights)
+print("Monte Carlo Result:", monte_carlo_result)
+
+# Heuristický algoritmus
+heuristic_result = boat_heuristic(*weights)
+print("Heuristic Result:", heuristic_result)
