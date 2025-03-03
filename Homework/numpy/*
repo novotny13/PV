@@ -1,1 +1,443 @@
+#20.6
+import numpy as np
 
+# Definice pole
+data = np.array([20, 23, -100, -5, 30, 70, -18, 99, 81, 16, 45, 90, -39, -82, 75, 0, 16, 91, 48, 0, 70])
+
+# 1. Vyberte jen záporná čísla
+negative_numbers = data[np.where(data < 0)]
+print("1. Záporná čísla:", negative_numbers)
+
+# 2. Vyberte čísla v rozsahu -10 až -1
+range_neg_10_to_neg_1 = data[np.where((data >= -10) & (data <= -1))]
+print("2. Čísla v rozsahu -10 až -1:", range_neg_10_to_neg_1)
+
+# 3. Vyberte čísla v rozsahu 1 až 50 nebo záporná čísla
+range_1_to_50_or_negative = data[np.where((data >= 1) & (data <= 50) | (data < 0)]
+print("3. Čísla v rozsahu 1 až 50 nebo záporná čísla:", range_1_to_50_or_negative)
+
+
+
+#20.7
+import numpy as np
+
+# a) Vygenerujte jedno náhodné celé číslo
+random_int = np.random.randint(0, 100)  # Rozsah 0 až 99
+print("a) Náhodné celé číslo:", random_int)
+
+# b) Vygenerujte jedno náhodné desetinné číslo
+random_float = np.random.rand()  # Výchozí rozsah 0.0 až 1.0
+print("b) Náhodné desetinné číslo:", random_float)
+
+# c) Vygenerujte jednorozměrné pole náhodných čísel o velikosti 100 prvků
+random_array = np.random.rand(100)  # 100 náhodných desetinných čísel
+print("c) Jednorozměrné pole o velikosti 100 prvků:")
+print(random_array)
+
+# d) Vygenerujte matici náhodných čísel o velikosti 10x10 prvků
+random_matrix = np.random.rand(10, 10)  # Matice 10x10 s náhodnými desetinnými čísly
+print("d) Matice 10x10 náhodných čísel:")
+print(random_matrix)
+
+# e) Vygenerujte náhodnou hodnotu z pole [21, 22, 34, 56]
+choices = [21, 22, 34, 56]
+random_choice = np.random.choice(choices)  # Náhodný výběr z pole
+print("e) Náhodná hodnota z pole [21, 22, 34, 56]:", random_choice)
+
+
+
+
+
+#20.8
+import numpy as np
+
+# Možné známky
+znamky = [1, 2, 3, 4, 5]
+
+# Pravděpodobnosti pro jednotlivé známky
+pravdepodobnosti = [0.10, 0.25, 0.25, 0.28, 0.12]
+
+# Vygenerování 15 známek
+generovane_znamky = np.random.choice(znamky, size=15, p=pravdepodobnosti)
+
+print("Vygenerované známky:", generovane_znamky)
+
+
+
+
+#20.10
+import numpy as np  # Import knihovny NumPy
+
+# Vytvoření dvojrozměrného pole (matice) 3x3
+x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# Výpis pole
+print("Pole x:")
+print(x)
+
+# Zjištění rozměrů pole (shape)
+print("\nRozměry pole x (shape):", x.shape)
+
+# Zjištění datového typu pole (dtype)
+print("Datový typ pole x (dtype):", x.dtype)
+
+
+
+
+#20.11
+import numpy as np
+
+# Vytvoření dvojrozměrného pole (matice) 3x3
+x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# a) Odečtení skalární hodnoty 1 od matice x
+result_a = x - 1
+print("a) Odečtení skalární hodnoty 1 od matice x:")
+print(result_a)
+
+# b) Přičtení skalární hodnoty 1 k matici x
+result_b = x + 1
+print("\nb) Přičtení skalární hodnoty 1 k matici x:")
+print(result_b)
+
+# c) Vynásobení matice x skalární hodnotou 2
+result_c = x * 2
+print("\nc) Vynásobení matice x skalární hodnotou 2:")
+print(result_c)
+
+# d) Dělení matice x skalární hodnotou 2
+result_d = x / 2
+print("\nd) Dělení matice x skalární hodnotou 2:")
+print(result_d)
+print("Datový typ výsledku d):", result_d.dtype)
+
+
+
+
+
+#20.12
+import numpy as np
+
+# Vytvoření dvojrozměrného pole (matice) 3x3
+x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# a) Relační operace x > 5
+result_a = x > 5
+print("a) Výsledek x > 5:")
+print(result_a)
+
+# b) Relační operace (x > 5) & (x < 8)
+result_b = (x > 5) & (x < 8)
+print("\nb) Výsledek (x > 5) & (x < 8):")
+print(result_b)
+
+# c) Relační operace (x < 2) | (x > 7)
+result_c = (x < 2) | (x > 7)
+print("\nc) Výsledek (x < 2) | (x > 7):")
+print(result_c)
+
+
+
+
+
+#20.13
+import numpy as np
+
+# Vytvoření první matice 3x3
+x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# Vytvoření druhé matice 3x3
+y = np.array([[-1, -1, -1], [-2, -2, -2], [-3, -3, -3]])
+
+# a) Sčítání matic
+result_add = x + y
+print("a) Sčítání matic x + y:")
+print(result_add)
+
+# b) Odečítání matic
+result_sub = x - y
+print("\nb) Odečítání matic x - y:")
+print(result_sub)
+
+# c) Prvkové násobení matic (element-wise multiplication)
+result_mul = x * y
+print("\nc) Prvkové násobení matic x * y:")
+print(result_mul)
+
+# d) Prvkové dělení matic (element-wise division)
+result_div = x / y
+print("\nd) Prvkové dělení matic x / y:")
+print(result_div)
+
+# e) Maticové násobení (správné maticové násobení)
+result_matmul = x @ y
+print("\ne) Maticové násobení x @ y:")
+print(result_matmul)
+
+
+
+
+
+#20.14
+import numpy as np
+
+# Vytvoření matice 3x3
+x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# a) Vypište číslo na prvním řádku a prvním sloupci
+result_a = x[0, 0]
+print("a) Prvek na prvním řádku a prvním sloupci:", result_a)
+
+# b) Vypište celý druhý řádek
+result_b = x[1, :]
+print("\nb) Celý druhý řádek:", result_b)
+
+# c) Vypište první až druhý řádek
+result_c = x[0:2, :]
+print("\nc) První až druhý řádek:")
+print(result_c)
+
+# d) Opakování úkolů s použitím jedněch hranatých závorek
+result_d_a = x[0, 0]  # První řádek, první sloupec
+result_d_b = x[1, :]  # Celý druhý řádek
+result_d_c = x[0:2, :]  # První až druhý řádek
+print("\nd) Opakování úkolů s jedněmi hranatými závorkami:")
+print("d_a) Prvek na prvním řádku a prvním sloupci:", result_d_a)
+print("d_b) Celý druhý řádek:", result_d_b)
+print("d_c) První až druhý řádek:")
+print(result_d_c)
+
+# e) Filtrace prvků větších než 5
+result_e = x[x > 5]
+print("\ne) Prvky větší než 5:", result_e)
+
+
+
+
+
+
+#20.15
+import numpy as np
+
+# Vytvoření matice 3x3
+x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# a) Odstranění všech čísel kromě druhého sloupce pomocí broadcastingu
+result_a = x * [0, 1, 0]
+print("a) Odstranění všech čísel kromě druhého sloupce:")
+print(result_a)
+
+# b) Odstranění všech čísel kromě druhého řádku pomocí broadcastingu
+result_b = x * [[0], [1], [0]]
+print("\nb) Odstranění všech čísel kromě druhého řádku:")
+print(result_b)
+
+# c) Změna celého druhého řádku na hodnotu 99
+x_copy = x.copy()  # Vytvoření kopie, abychom nezměnili původní matici
+x_copy[1] = 99
+print("\nc) Změna celého druhého řádku na hodnotu 99:")
+print(x_copy)
+
+# d) Použití operací +=, -=, *=, /= na matici
+x_copy = x.copy()  # Vytvoření kopie, abychom nezměnili původní matici
+x_copy += 10  # Přičtení 10 ke každému prvku
+print("\nd) Přičtení 10 ke každému prvku matice:")
+print(x_copy)
+
+x_copy = x.copy()
+x_copy -= 5  # Odečtení 5 od každého prvku
+print("\nOdečtení 5 od každého prvku matice:")
+print(x_copy)
+
+x_copy = x.copy()
+x_copy *= 2  # Vynásobení každého prvku 2
+print("\nVynásobení každého prvku 2:")
+print(x_copy)
+
+x_copy = x.copy()
+x_copy /= 2  # Vydělení každého prvku 2
+print("\nVydělení každého prvku 2:")
+print(x_copy)
+
+
+
+
+
+
+
+#20.16
+import numpy as np
+
+# 1. Generování matice nul
+zeros_matrix = np.zeros((3, 3))
+print("1. Matice nul (3x3):")
+print(zeros_matrix)
+
+# 2. Generování matice jedniček
+ones_matrix = np.ones((3, 3))
+print("\n2. Matice jedniček (3x3):")
+print(ones_matrix)
+
+# 3. Generování matice s konstantní hodnotou
+full_matrix = np.full((3, 3), 3148)
+print("\n3. Matice s konstantní hodnotou 3148 (3x3):")
+print(full_matrix)
+
+# 4. Generování jednotkové matice
+identity_matrix = np.eye(3)
+print("\n4. Jednotková matice (3x3):")
+print(identity_matrix)
+
+# 5. Generování diagonální matice
+diagonal_matrix = np.diag([1, 2, 3, 4])
+print("\n5. Diagonální matice:")
+print(diagonal_matrix)
+
+# 6. Generování číselné řady
+arange_series = np.arange(50)
+print("\n6. Číselná řada od 0 do 49:")
+print(arange_series)
+
+
+
+
+
+
+#20.17
+import numpy as np
+
+# a) Vygenerujte jedno náhodné celé číslo
+random_int = np.random.randint(0, 100)  # Rozsah 0 až 99
+print("a) Náhodné celé číslo:", random_int)
+
+# b) Vygenerujte jedno náhodné desetinné číslo
+random_float = np.random.rand()  # Výchozí rozsah 0.0 až 1.0
+print("b) Náhodné desetinné číslo:", random_float)
+
+# c) Vygenerujte jednorozměrné pole náhodných čísel o velikosti 100 prvků
+random_array = np.random.rand(100)  # 100 náhodných desetinných čísel
+print("\nc) Jednorozměrné pole o velikosti 100 prvků:")
+print(random_array)
+
+# d) Vygenerujte matici náhodných čísel o velikosti 10x10 prvků
+random_matrix = np.random.rand(10, 10)  # Matice 10x10 s náhodnými desetinnými čísly
+print("\nd) Matice 10x10 náhodných čísel:")
+print(random_matrix)
+
+# e) Vygenerujte náhodnou hodnotu z pole [21, 22, 34, 56]
+choices = [21, 22, 34, 56]
+random_choice = np.random.choice(choices)  # Náhodný výběr z pole
+print("\ne) Náhodná hodnota z pole [21, 22, 34, 56]:", random_choice)
+
+# f) Vygenerujte 15 známek z předmětu Matematika s danými pravděpodobnostmi
+znamky = [1, 2, 3, 4, 5]
+pravdepodobnosti = [0.10, 0.25, 0.25, 0.28, 0.12]
+generovane_znamky = np.random.choice(znamky, size=15, p=pravdepodobnosti)
+print("\nf) Vygenerované známky z Matematiky:")
+print(generovane_znamky)
+
+
+
+
+
+
+
+
+#20.18
+import numpy as np
+
+# Vytvoření pole s jmény kamarádů
+kamaradi = np.array(["Alice", "Bob", "Charlie"])
+
+# a) Náhodné seřazení pole "kamaradi" (permutace na místě)
+np.random.shuffle(kamaradi)
+print("a) Náhodné pořadí kamarádů (permutace na místě):")
+print(kamaradi)
+
+# b) Náhodné seřazení pole "kamaradi" do nového pole (bez změny původního pole)
+kamaradi_poradi = np.random.permutation(kamaradi)
+print("\nb) Náhodné pořadí kamarádů (nové pole):")
+print(kamaradi_poradi)
+print("Původní pole zůstalo nezměněno:")
+print(kamaradi)
+
+
+
+
+
+
+
+#20.19
+import numpy as np
+
+# a) Generování 1000 záznamů o průměrné mzdě zdravotních sestřiček
+# Normální rozdělení se střední hodnotou 38 355 CZK a směrodatnou odchylkou 14 225 CZK
+stredni_hodnota = 38355
+smerodatna_odchylka = 14225
+mzdy_sestricek = np.random.normal(stredni_hodnota, smerodatna_odchylka, 1000)
+print("a) Prvních 10 záznamů o mzdách zdravotních sestřiček:")
+print(mzdy_sestricek[:10])  # Zobrazíme prvních 10 záznamů pro kontrolu
+
+# b) Generování 100 záznamů s binomickým rozdělením
+# 5 pokusů hodu kostkou, pravděpodobnost šestky je 16% (0.16)
+pocet_pokusu = 5
+pravdepodobnost_sestky = 0.16
+hody_kostkou = np.random.binomial(pocet_pokusu, pravdepodobnost_sestky, 100)
+print("\nb) Prvních 10 záznamů s binomickým rozdělením (počet šestek v 5 hodech kostkou):")
+print(hody_kostkou[:10])  # Zobrazíme prvních 10 záznamů pro kontrolu
+
+
+
+
+#20.20
+from PIL import Image
+import numpy as np
+
+# Načtení obrázku
+img = Image.open("8a68f104fc2394e6cca08922bbecf6d2.jpg")
+
+# Převod obrázku na matici
+matrix = np.asarray(img)
+
+# Zjištění vlastností matice
+print("Datový typ matice:", matrix.dtype)
+print("Tvar (shape) matice:", matrix.shape)
+print("\nPrvních několik řádků matice:")
+print(matrix[:2])  # Zobrazíme prvních několik řádků pro kontrolu
+
+
+
+
+
+#20.21
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Načtení obrázku a převod na matici
+img = Image.open("8a68f104fc2394e6cca08922bbecf6d2.jpg")
+matrix = np.asarray(img)
+
+# a) Zobrazení původního obrázku v Jupyter Notebooku
+# Image.fromarray(matrix.astype(np.uint8), 'RGB')
+
+# b) Zobrazení původního obrázku pomocí matplotlib
+plt.imshow(matrix.astype(np.uint8))
+plt.title("Původní obrázek")
+plt.show()
+
+# Zmenšení obrázku 6x (každý 6. pixel)
+mini_matrix = matrix[::6, ::6, :]
+
+# Zobrazení zmenšeného obrázku
+plt.imshow(mini_matrix.astype(np.uint8))
+plt.title("Zmenšený obrázek (6x)")
+plt.show()
+
+# Odstranění červené složky (R) z pixelů
+mini_matrix[:, :, 0] = np.zeros([mini_matrix.shape[0], mini_matrix.shape[1]])
+
+# Zobrazení obrázku bez červené složky
+plt.imshow(mini_matrix.astype(np.uint8))
+plt.title("Zmenšený obrázek bez červené složky")
+plt.show()
